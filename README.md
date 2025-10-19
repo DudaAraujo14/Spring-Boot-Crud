@@ -1,26 +1,27 @@
 # 📚 CP2 Spring Boot CRUD — Sistema de Autores e Livros
 
 ## 🧾 Sumário
-- [Descrição Geral](#-descrição-geral)
-- [Arquitetura do Projeto](#-arquitetura-do-projeto)
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [Estrutura de Pacotes](#-estrutura-de-pacotes)
-- [Banco de Dados H2](#-banco-de-dados-h2)
-- [Configurações do Projeto](#-configurações-do-projeto)
-- [Como Executar o Projeto](#-como-executar-o-projeto)
-- [Endpoints da API](#-endpoints-da-api)
-    - [Autores](#autores)
-    - [Livros](#livros)
-- [Exemplos de Requisições JSON](#-exemplos-de-requisições-json)
-- [Testes Automatizados](#-testes-automatizados)
-- [Erros Comuns e Soluções](#-erros-comuns-e-soluções)
-- [Autora do Projeto](#-autora-do-projeto)
-- [Licença Acadêmica](#-licença-acadêmica)
+- [ Descrição Geral](#-descrição-geral)
+- [ Arquitetura do Projeto](#️-arquitetura-do-projeto)
+- [ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
+- [ Estrutura de Pacotes](#-estrutura-de-pacotes)
+- [ Banco de Dados H2](#️-banco-de-dados-h2)
+- [ Configurações do Projeto](#-configurações-do-projeto)
+- [ Como Executar o Projeto](#️-como-executar-o-projeto)
+- [ Endpoints da API](#-endpoints-da-api)
+  - [ Autores](#-autores)
+  - [ Livros](#-livros)
+- [ Exemplos de Requisições JSON](#-exemplos-de-requisições-json)
+- [ Testes Automatizados](#-testes-automatizados)
+- [ Cobertura de Código (JaCoCo)](#-cobertura-de-código-jacoco)
+- [ Melhores Práticas Aplicadas](#-melhores-práticas-aplicadas)
+- [ Erros Comuns e Soluções](#️-erros-comuns-e-soluções)
+- [ Autora do Projeto](#-autora-do-projeto)
+- [ Licença Acadêmica](#-licença-acadêmica)
 
 ---
 
 ## 💡 Descrição Geral
-
 Este projeto foi desenvolvido como parte da **avaliação CP2**.  
 Trata-se de uma aplicação **CRUD RESTful** para gerenciar **Autores** e **Livros** com **Java 17** e **Spring Boot 3**.
 
@@ -72,7 +73,6 @@ E <--> G[Entity]
 ---
 
 ## 🧱 Estrutura de Pacotes
-
 ```plaintext
 src/
 ├── main/
@@ -84,7 +84,7 @@ src/
 │   │       ├── mapper/                → Conversores entre entidades e DTOs
 │   │       ├── repository/            → Spring Data JPA
 │   │       ├── service/               → Regras de negócio
-│   │       └── controladores/                   → REST Controllers (AuthorController, BookController)
+│   │       └── controladores/         → REST Controllers (AuthorController, BookController)
 │   └── resources/
 │       ├── application.properties     → Configurações principais
 │       └── application-test.properties → Configuração de testes (H2 em memória)
@@ -99,7 +99,6 @@ src/
 ---
 
 ## 🗄️ Banco de Dados H2
-
 Durante a execução, a aplicação usa **H2 em memória**.
 
 ### 🔧 `application.properties`
@@ -130,7 +129,6 @@ spring.h2.console.path=/h2-console
 ---
 
 ## 🔧 Configurações do Projeto
-
 - **Java**: 17
 - **Porta padrão**: `8080`
 - **Build**: `mvn clean package`
@@ -139,7 +137,6 @@ spring.h2.console.path=/h2-console
 ---
 
 ## ▶️ Como Executar o Projeto
-
 ```bash
 # 1) Clonar o repositório (exemplo)
 git clone <seu-repo.git>
@@ -159,89 +156,28 @@ mvn spring-boot:run
 
 Base URL: `http://localhost:8080`
 
-### Autores
+### 📘 Autores
+| Método | Endpoint | Descrição |
+|--------|-----------|------------|
+| POST   | `/authors` | Cria um novo autor |
+| GET    | `/authors` | Lista todos os autores |
+| GET    | `/authors/{id}` | Busca autor por ID |
+| PUT    | `/authors/{id}` | Atualiza um autor existente |
+| DELETE | `/authors/{id}` | Exclui um autor |
+| GET    | `/authors/{id}/books` | Lista livros de um autor |
 
-#### ➕ Criar Autor — `POST /authors`
-```json
-{
-  "name": "Clarice Lispector",
-  "email": "clarice@example.com"
-}
-```
-**201 Created**
-```json
-{
-  "id": 1,
-  "name": "Clarice Lispector",
-  "email": "clarice@example.com"
-}
-```
-
-#### 📋 Listar Autores — `GET /authors`
-```json
-[
-  { "id": 1, "name": "Clarice Lispector", "email": "clarice@example.com" },
-  { "id": 2, "name": "Machado de Assis", "email": "machado@example.com" }
-]
-```
-
-#### 🔍 Buscar Autor — `GET /authors/{id}`
-
-#### ✏️ Atualizar Autor — `PUT /authors/{id}`
-```json
-{
-  "name": "Clarice Lispector (Atualizada)",
-  "email": "clarice.lispector@example.com"
-}
-```
-
-#### ❌ Remover Autor — `DELETE /authors/{id}`
-
----
-
-### Livros
-
-#### ➕ Criar Livro — `POST /books`
-```json
-{
-  "title": "A Hora da Estrela",
-  "isbn": "978-85-359-0277-8",
-  "authorId": 1
-}
-```
-
-#### 📋 Listar Livros — `GET /books`
-```json
-[
-  { "id": 1, "title": "A Hora da Estrela", "isbn": "978-85-359-0277-8", "authorId": 1 },
-  { "id": 2, "title": "Dom Casmurro", "isbn": "978-85-359-0277-9", "authorId": 2 }
-]
-```
-
-#### 🔍 Buscar Livro — `GET /books/{id}`
-
-#### ✏️ Atualizar Livro — `PUT /books/{id}`
-```json
-{
-  "title": "A Hora da Estrela (Edição Revisada)",
-  "isbn": "978-85-359-0277-8",
-  "authorId": 1
-}
-```
-
-#### ❌ Remover Livro — `DELETE /books/{id}`
-
-#### 📚 Listar livros de um autor — `GET /authors/{id}/books`
-```json
-[
-  { "id": 1, "title": "A Hora da Estrela", "isbn": "978-85-359-0277-8", "authorId": 1 }
-]
-```
+### 📗 Livros
+| Método | Endpoint | Descrição |
+|--------|-----------|------------|
+| POST   | `/books` | Cria um novo livro |
+| GET    | `/books` | Lista todos os livros |
+| GET    | `/books/{id}` | Busca livro por ID |
+| PUT    | `/books/{id}` | Atualiza informações de um livro |
+| DELETE | `/books/{id}` | Exclui um livro |
 
 ---
 
 ## 🧩 Exemplos de Requisições JSON
-
 **Autor**
 ```json
 { "name": "Machado de Assis", "email": "machado@example.com" }
@@ -255,24 +191,55 @@ Base URL: `http://localhost:8080`
 ---
 
 ## 🧪 Testes Automatizados
-
 Cobrem:
 - CRUD de autores e livros
 - Integração da API com contexto Spring
 - Mapeamentos Entity ⇄ DTO
+- Controllers  
+- Services  
+- Mappers  
+- Exception Handlers  
+- Integração com o contexto Spring Boot
 
 Ferramentas:
 - **JUnit 5**, **Mockito**, **Spring Boot Test**
 
 Executar:
 ```bash
-  mvn test
+mvn test
+```
+
+Os relatórios JaCoCo são gerados em:
+```
+target/site/jacoco/index.html
 ```
 
 ---
 
-## ⚠️ Erros Comuns e Soluções
+## 📊 Cobertura de Código (JaCoCo)
+| Pacote | Cobertura |
+|--------|------------|
+| service | 100% |
+| controller | 94% |
+| mapper | 91% |
+| exception | 91% |
+| domain | 92% |
+| **Total** | 🟩 **94%** |
 
+---
+
+## 💎 Melhores Práticas Aplicadas
+- ✅ Princípios **SOLID**
+- ✅ **DTOs** para isolar camadas
+- ✅ **Mapper Pattern**
+- ✅ **Global Exception Handler**
+- ✅ **Injeção de Dependências (DI)**
+- ✅ **Testes unitários e de integração**
+- ✅ Banco em memória para isolamento de testes
+
+---
+
+## ⚠️ Erros Comuns e Soluções
 | Erro | Causa | Solução |
 |---|---|---|
 | 500 — Internal Server Error ao criar livro | `authorId` não existe | Crie primeiro o autor ou use um `authorId` válido |
@@ -283,7 +250,6 @@ Executar:
 ---
 
 ## 👩‍💻 Autora do Projeto
-
 **Maria Eduarda Araujo Penas**  
 📧 eduarda.penas@example.com  
 💻 CP2 — Desenvolvimento Web com Spring Boot
@@ -291,6 +257,5 @@ Executar:
 ---
 
 ## 📜 Licença Acadêmica
-
 Projeto feito para **fins educacionais** (CP2).  
 Você pode estudar, melhorar e reutilizar com finalidade acadêmica.
