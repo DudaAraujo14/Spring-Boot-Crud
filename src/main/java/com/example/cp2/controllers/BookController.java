@@ -1,4 +1,4 @@
-package com.example.cp2.web;
+package com.example.cp2.controllers;
 
 import com.example.cp2.dto.BookRecord;
 import com.example.cp2.service.BookService;
