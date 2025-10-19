@@ -7,30 +7,38 @@ import com.example.cp2.dto.BookRecord;
 import com.example.cp2.mapper.AuthorMapperImpl;
 import com.example.cp2.mapper.BookMapperImpl;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MapperTests {
+class MapperTests {
+
+    private final AuthorMapperImpl authorMapper = new AuthorMapperImpl();
+    private final BookMapperImpl bookMapper = new BookMapperImpl();
 
     @Test
-    void authorMapper_roundtrip() {
-        var mapper = new AuthorMapperImpl();
-        AuthorRecord record = new AuthorRecord(1L, "Ana", "ana@example.com");
+    void shouldMapAuthorToEntityAndBack() {
+        AuthorRecord record = new AuthorRecord(1L, "Robert Martin", "clean@code.com");
+        Author entity = authorMapper.toEntity(record);
 
-        Author entity = mapper.toEntity(record);
-        assertEquals("Ana", entity.getName());
+        assertEquals("Robert Martin", entity.getName());
+        assertEquals("clean@code.com", entity.getEmail());
 
-        AuthorRecord back = mapper.toRecord(entity);
-        assertEquals("ana@example.com", back.email());
+        AuthorRecord back = authorMapper.toRecord(entity);
+        assertEquals("Robert Martin", back.name());
+        assertEquals("clean@code.com", back.email());
     }
 
     @Test
-    void bookMapper_includesAuthorId() {
-        var mapper = new BookMapperImpl();
-        var author = new Author(10L, "Ana", "ana@example.com");
-        var book = new Book(5L, "Livro Teste", "ISBN-001", author);
+    void shouldMapBookToEntityAndBack() {
+        // book record agora com 4 argumentos (id, title, isbn, authorId)
+        BookRecord record = new BookRecord(1L, "Clean Code", "123456", 10L);
+        Book entity = bookMapper.toEntity(record);
 
-        BookRecord record = mapper.toRecord(book);
-        assertEquals(10L, record.authorId());
-        assertEquals("Livro Teste", record.title());
+        assertEquals("Clean Code", entity.getTitle());
+        assertEquals("123456", entity.getIsbn());
+
+        BookRecord back = bookMapper.toRecord(entity);
+        assertEquals("Clean Code", back.title());
+        assertEquals("123456", back.isbn());
     }
 }
