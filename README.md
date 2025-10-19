@@ -31,7 +31,7 @@ A arquitetura segue camadas bem definidas:
 - **mapper**: Conversão entre Entity ⇄ DTO
 - **repository**: Acesso a dados (Spring Data JPA)
 - **service**: Regras de negócio
-- **web**: Controladores REST (endpoints)
+- **Controladores**: Controladores REST (endpoints)
 
 O banco é **H2 em memória**, ideal para desenvolvimento/testes, e os endpoints podem ser validados com **Postman**.
 
@@ -84,7 +84,7 @@ src/
 │   │       ├── mapper/                → Conversores entre entidades e DTOs
 │   │       ├── repository/            → Spring Data JPA
 │   │       ├── service/               → Regras de negócio
-│   │       └── web/                   → REST Controllers (AuthorController, BookController)
+│   │       └── controladores/                   → REST Controllers (AuthorController, BookController)
 │   └── resources/
 │       ├── application.properties     → Configurações principais
 │       └── application-test.properties → Configuração de testes (H2 em memória)
